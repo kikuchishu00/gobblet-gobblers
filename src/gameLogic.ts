@@ -44,18 +44,25 @@ export function idxToRowCol(idx: number): [number, number] {
   return [Math.floor(idx / 3), idx % 3];
 }
 
-/** 勝利チェック。勝利ラインがあれば [player, winLine] を返す */
-export function checkWinner(board: Board): { winner: Player; winLine: number[] } | null {
+/** 特定プレイヤーの勝利ラインをチェック */
+function checkWinnerForPlayer(board: Board, player: Player): number[] | null {
   for (const line of WIN_LINES) {
     const tops = line.map((idx) => {
       const [r, c] = idxToRowCol(idx);
       return topPiece(board[r][c]);
     });
-    if (tops[0] && tops[1] && tops[2] &&
-      tops[0].player === tops[1].player &&
-      tops[1].player === tops[2].player) {
-      return { winner: tops[0].player, winLine: line };
+    if (tops[0]?.player === player && tops[1]?.player === player && tops[2]?.player === player) {
+      return line;
     }
+  }
+  return null;
+}
+
+/** 勝利チェック。勝利ラインがあれば [player, winLine] を返す */
+export function checkWinner(board: Board): { winner: Player; winLine: number[] } | null {
+  for (const player of ['P1', 'P2'] as Player[]) {
+    const line = checkWinnerForPlayer(board, player);
+    if (line) return { winner: player, winLine: line };
   }
   return null;
 }
@@ -102,20 +109,23 @@ export function moveOnBoard(state: GameState, fromRow: number, fromCol: number, 
 }
 
 function applyMove(state: GameState): GameState {
-  const result = checkWinner(state.board);
-  if (result) {
-    return {
-      ...state,
-      phase: 'won',
-      winner: result.winner,
-      winLine: result.winLine,
-      currentPlayer: state.currentPlayer,
-    };
+  const mover = state.currentPlayer;
+  const opponent: Player = mover === 'P1' ? 'P2' : 'P1';
+
+  // 相手のラインを先にチェック（自分のコマを動かして相手のラインが露出した場合に相手が勝つ）
+  const opponentLine = checkWinnerForPlayer(state.board, opponent);
+  if (opponentLine) {
+    return { ...state, phase: 'won', winner: opponent, winLine: opponentLine };
+  }
+
+  const myLine = checkWinnerForPlayer(state.board, mover);
+  if (myLine) {
+    return { ...state, phase: 'won', winner: mover, winLine: myLine };
   }
 
   return {
     ...state,
-    currentPlayer: state.currentPlayer === 'P1' ? 'P2' : 'P1',
+    currentPlayer: opponent,
   };
 }
 
