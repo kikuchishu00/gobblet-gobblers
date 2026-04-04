@@ -94,6 +94,29 @@
   flex-shrink: 0;
 }
 
+/* スマホ: 縦積みレイアウト */
+@media (max-width: 600px) {
+  .container {
+    height: auto;
+    min-height: 100svh;
+    justify-content: flex-start;
+    padding: 16px 12px;
+    gap: 12px;
+  }
+
+  .gameArea {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .board {
+    grid-template-columns: repeat(3, 90px);
+    grid-template-rows: repeat(3, 90px);
+  }
+}
+
 /* リセット */
 .resetBtn {
   padding: 8px 24px;

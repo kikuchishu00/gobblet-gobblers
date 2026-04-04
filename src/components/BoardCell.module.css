@@ -53,3 +53,10 @@
   color: #6b7280;
   font-weight: 600;
 }
+
+@media (max-width: 600px) {
+  .cell {
+    width: 90px;
+    height: 90px;
+  }
+}

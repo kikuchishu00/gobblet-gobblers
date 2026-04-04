@@ -19,6 +19,19 @@
   width: 100px;
 }
 
+@media (max-width: 600px) {
+  .vertical {
+    flex-direction: row;
+    width: auto;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .piecesVertical {
+    flex-direction: row;
+  }
+}
+
 .label {
   font-size: 13px;
   font-weight: 600;
