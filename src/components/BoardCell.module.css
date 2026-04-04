@@ -56,7 +56,7 @@
 
 @media (max-width: 600px) {
   .cell {
-    width: 90px;
-    height: 90px;
+    width: min(90px, 28vw);
+    height: min(90px, 28vw);
   }
 }
