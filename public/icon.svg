@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#1d4ed8"/>
+  <!-- 3x3グリッド -->
+  <rect x="56" y="56" width="120" height="120" rx="16" fill="white" opacity="0.15"/>
+  <rect x="196" y="56" width="120" height="120" rx="16" fill="white" opacity="0.15"/>
+  <rect x="336" y="56" width="120" height="120" rx="16" fill="white" opacity="0.15"/>
+  <rect x="56" y="196" width="120" height="120" rx="16" fill="white" opacity="0.15"/>
+  <rect x="196" y="196" width="120" height="120" rx="16" fill="white" opacity="0.15"/>
+  <rect x="336" y="196" width="120" height="120" rx="16" fill="white" opacity="0.15"/>
+  <rect x="56" y="336" width="120" height="120" rx="16" fill="white" opacity="0.15"/>
+  <rect x="196" y="336" width="120" height="120" rx="16" fill="white" opacity="0.15"/>
+  <rect x="336" y="336" width="120" height="120" rx="16" fill="white" opacity="0.15"/>
+  <!-- 青コマ（大） -->
+  <circle cx="116" cy="116" r="44" fill="#93c5fd"/>
+  <!-- 青コマ（中） -->
+  <circle cx="256" cy="256" r="36" fill="#60a5fa"/>
+  <!-- 赤コマ（大） -->
+  <circle cx="396" cy="116" r="44" fill="#fca5a5"/>
+  <!-- 赤コマ（大、青を覆う） -->
+  <circle cx="116" cy="396" r="44" fill="#ef4444"/>
+</svg>
