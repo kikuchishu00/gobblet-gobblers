@@ -41,9 +41,9 @@ export function HandArea({ player, pieces, isActive, selection, onSelectPiece, l
                 onClick={() => !isEmpty && isActive && onSelectPiece(rep)}
                 disabled={isEmpty || !isActive}
               />
-              {!isEmpty && stack!.length > 1 && (
-                <span className={styles.count}>×{stack!.length}</span>
-              )}
+              <span className={[styles.count, (!isEmpty && stack!.length > 1) ? '' : styles.invisible].join(' ')}>
+                ×{!isEmpty ? stack!.length : ''}
+              </span>
             </div>
           );
         })}
