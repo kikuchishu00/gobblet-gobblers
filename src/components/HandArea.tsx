@@ -1,4 +1,4 @@
-import type { Piece, Player, SelectionSource } from '../types';
+import type { Piece, Player, PieceSize, SelectionSource } from '../types';
 import { PieceView } from './PieceView';
 import styles from './HandArea.module.css';
 
@@ -12,41 +12,41 @@ interface Props {
   vertical?: boolean;
 }
 
-export function HandArea({ pieces, isActive, selection, onSelectPiece, label, vertical }: Props) {
+// 常に全サイズ分のスロットを描画し、手札にないものは透明にする
+const ALL_SIZES: PieceSize[] = [3, 2, 1];
+
+export function HandArea({ player, pieces, isActive, selection, onSelectPiece, label, vertical }: Props) {
   const sizeMap = new Map<number, Piece[]>();
   for (const p of pieces) {
     if (!sizeMap.has(p.size)) sizeMap.set(p.size, []);
     sizeMap.get(p.size)!.push(p);
   }
-  // 縦レイアウト時: 大→中→小の順で上から並べる
-  const uniqueSizes = [3, 2, 1].filter((s) => sizeMap.has(s));
 
   return (
     <div className={[styles.hand, isActive ? styles.active : '', vertical ? styles.vertical : ''].join(' ')}>
       <div className={styles.label}>{label}</div>
       <div className={[styles.pieces, vertical ? styles.piecesVertical : ''].join(' ')}>
-        {uniqueSizes.map((size) => {
-          const stack = sizeMap.get(size)!;
-          const rep = stack[0];
-          const isSelected =
-            selection?.kind === 'hand' && selection.piece.id === rep.id;
+        {ALL_SIZES.map((size) => {
+          const stack = sizeMap.get(size);
+          const isEmpty = !stack || stack.length === 0;
+          // 手札にないサイズはダミーのコマを透明で表示してスペースを確保
+          const dummyPiece: Piece = { id: `dummy-${player}-${size}`, player, size };
+          const rep = isEmpty ? dummyPiece : stack[0];
+          const isSelected = !isEmpty && selection?.kind === 'hand' && selection.piece.id === rep.id;
           return (
-            <div key={size} className={styles.pieceWrapper}>
+            <div key={size} className={[styles.pieceWrapper, isEmpty ? styles.invisible : ''].join(' ')}>
               <PieceView
                 piece={rep}
                 isSelected={isSelected}
-                onClick={() => isActive && onSelectPiece(rep)}
-                disabled={!isActive}
+                onClick={() => !isEmpty && isActive && onSelectPiece(rep)}
+                disabled={isEmpty || !isActive}
               />
-              {stack.length > 1 && (
-                <span className={styles.count}>×{stack.length}</span>
+              {!isEmpty && stack!.length > 1 && (
+                <span className={styles.count}>×{stack!.length}</span>
               )}
             </div>
           );
         })}
-        {pieces.length === 0 && (
-          <span className={styles.empty}>なし</span>
-        )}
       </div>
     </div>
   );

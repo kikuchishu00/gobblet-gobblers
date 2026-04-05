@@ -51,6 +51,10 @@
   gap: 3px;
 }
 
+.invisible {
+  visibility: hidden;
+}
+
 .count {
   font-size: 10px;
   color: #6b7280;
