@@ -67,12 +67,13 @@
   .vertical {
     width: auto;
     min-height: unset;
-    min-width: 240px;
     justify-content: center;
   }
 
   .piecesVertical {
     flex-direction: row;
     gap: 12px;
+    min-height: 80px; /* Lサイズ(68px)が消えても高さを維持 */
+    align-items: center;
   }
 }
