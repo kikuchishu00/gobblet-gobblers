@@ -66,14 +66,13 @@
 @media (max-width: 600px) {
   .vertical {
     width: auto;
-    min-height: unset;
+    min-height: 120px; /* ラベル+パディング+Lサイズ(68px)分を確保 */
     justify-content: center;
   }
 
   .piecesVertical {
     flex-direction: row;
     gap: 12px;
-    min-height: 80px; /* Lサイズ(68px)が消えても高さを維持 */
     align-items: center;
   }
 }
