@@ -17,6 +17,8 @@
   flex-direction: column;
   align-items: center;
   width: 100px;
+  min-height: 260px;
+  justify-content: center;
 }
 
 .label {
@@ -64,6 +66,9 @@
 @media (max-width: 600px) {
   .vertical {
     width: auto;
+    min-height: unset;
+    min-width: 240px;
+    justify-content: center;
   }
 
   .piecesVertical {
